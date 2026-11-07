@@ -1,9 +1,7 @@
 node_modules/
 .next/
+.next-dev/
 out/
-.env.local
 .env*
-!.env.example
-supabase/.temp/
 .openai/
 *.tsbuildinfo

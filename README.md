@@ -4,6 +4,8 @@ Next.js + React + TypeScript + Tailwind CSS. Run `npm install` and `npm run dev`
 
 Run `npm test` for the peso calculation, sample receipt reconciliation, report period boundary, and export tests. The static export can be hosted without a Node server or database. Product photos load from Unsplash; if an image is unavailable, a product icon is shown instead.
 
+Development uses `.next-dev`, while production builds use `.next`, so building the static export cannot overwrite a running development server's generated files. If you encounter an internal server error after upgrading an older checkout, stop the existing dev process and run `npm run dev` again.
+
 ## Client showcase demo
 
 The app runs entirely in the browser and needs no Supabase account or backend. All amounts use Philippine pesos (PHP / ₱), with realistic sample prices. No additional tax is applied; this is an illustrative store, not a tax or fiscal receipt implementation.
@@ -19,10 +21,10 @@ Demo state is saved under `smartpos-showcase-php-v3` in local storage, separate 
 
 Start at Point of Sale, add a product, charge the order, choose Exact amount, and complete the demo payment. Then explore Inventory, Reports, and Audit Trail. Use the profile/role button to try the cashier experience. Reset restores twelve products and 156 consistent sample transactions across roughly six months.
 
+On phones, use the labeled bottom navigation for Sales, Inventory, and Reports; More opens the remaining sections, settings, and demo guide. Adding a product reveals the View order button, which opens a focused order sheet. Discount editing and cancelled checkout return to that sheet. Inventory, transactions, team members, and audit entries become labeled cards on narrow screens. Reports include expandable exact amounts alongside the chart. Text, controls, and spacing scale across phone, tablet, and desktop layouts.
+
 Role switching illustrates a workflow, not a security boundary. No sign-in, invitation email, real card charge, or live business data is involved. Sample receipts are explicitly marked as demo documents. Reset only changes local demo data.
 
-## Optional Supabase foundation
+## Scope
 
-The existing [client](./lib/supabase.ts), [schema sketch](./supabase/schema.sql), and CLI configuration are retained for future development. The showcase does not import the Supabase client, contact the database, or need environment variables to run.
-
-Production integration remains: Auth sign-in and session handling, provisioning staff, server-backed queries, an authenticated atomic checkout RPC with stock locking and server-side pricing/tax, stock adjustment auditing, payment processor integration, and fiscal receipt requirements. Never enable direct sale inserts or trust client-side totals/roles. Create the first admin through a trusted database administrator. Use a separate project for staging; never connect demo data to a real store.
+This is a standalone client showcase. No environment variables, backend configuration, or database credentials are required. A production store would need authenticated accounts, server-enforced permissions, shared inventory, transactional checkout, and payment integration.

@@ -23,7 +23,7 @@ export function ProductImage({ product, width = 400 }: { product: Product; width
   return <span className="product-visual">{product.image && !failed ? <img src={photo(product, width)} alt={product.name} loading="lazy" onError={() => setFailed(true)} /> : <Package size={32} aria-label={product.name} />}</span>;
 }
 export function Empty({ title, text }: { title: string; text: string }) { return <div className="empty"><Package size={28} /><h3>{title}</h3><p>{text}</p></div>; }
-export function Dialog({ title, children, close }: { title: string; children: ReactNode; close: () => void }) {
+export function Dialog({ title, children, close, variant = '' }: { title: string; children: ReactNode; close: () => void; variant?: string }) {
   const ref = useRef<HTMLElement>(null), closeRef = useRef(close); closeRef.current = close;
   useEffect(() => {
     const previous = document.activeElement as HTMLElement;
@@ -38,5 +38,5 @@ export function Dialog({ title, children, close }: { title: string; children: Re
     document.addEventListener('keydown', key);
     return () => { document.body.style.overflow = before; document.removeEventListener('keydown', key); previous?.focus(); };
   }, []);
-  return <div className="modal-backdrop" onMouseDown={e => { if (e.target === e.currentTarget) close(); }}><section ref={ref} className="modal" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><button className="modal-close" onClick={close} aria-label="Close dialog"><X size={20} /></button><h2 id="dialog-title">{title}</h2>{children}</section></div>;
+  return <div className="modal-backdrop" onMouseDown={e => { if (e.target === e.currentTarget) close(); }}><section ref={ref} className={`modal ${variant ? `${variant}-dialog` : ''}`} role="dialog" aria-modal="true" aria-labelledby="dialog-title"><button className="modal-close" onClick={close} aria-label="Close dialog"><X size={20} /></button><h2 id="dialog-title">{title}</h2>{children}</section></div>;
 }
